@@ -1,11 +1,4 @@
-import "ace-builds/src-noconflict/ace";
-import "ace-builds/src-noconflict/ext-language_tools";
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/theme-github";
-import "ace-builds/src-noconflict/theme-twilight";
-// import "ace-builds/webpack-resolver";
 import { useContext, useEffect, useState } from "react";
-import AceEditor from "react-ace";
 import IconComponent from "../../components/genericIconComponent";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -16,6 +9,7 @@ import { typesContext } from "../../contexts/typesContext";
 import { postCustomComponent, postValidateCode } from "../../controllers/API";
 import { codeAreaModalPropsType } from "../../types/components";
 import BaseModal from "../baseModal";
+import { Editor } from "@monaco-editor/react";
 
 export default function CodeAreaModal({
   value,
@@ -151,20 +145,13 @@ export default function CodeAreaModal({
         />
         <div className="flex h-full w-full flex-col transition-all">
           <div className="h-full w-full">
-            <AceEditor
-              readOnly={readonly}
-              value={code}
-              mode="python"
+            <Editor
+              defaultValue={code}
+              defaultLanguage="python"
               height={height ?? "100%"}
-              highlightActiveLine={true}
-              showPrintMargin={false}
-              fontSize={14}
-              showGutter
-              enableLiveAutocompletion
-              theme={dark ? "twilight" : "github"}
-              name="CodeEditor"
+              theme={dark ? "vs-dark" : "light"}
               onChange={(value) => {
-                setCode(value);
+                setCode(value!);
               }}
               className="h-full w-full rounded-lg border-[1px] border-gray-300 custom-scroll dark:border-gray-600"
             />
